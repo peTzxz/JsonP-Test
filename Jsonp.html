@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Jsonp练习</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            text-decoration: none;
+        }
+        .wrapper{
+            margin: 100px;
+        }
+        input{
+            width: 400px;
+            height: 30px;
+        }
+        ul{
+            display: none;
+            margin-top: 0;
+            width: 400px;
+            border: 1px solid black;
+        }
+        li:hover{
+            background-color: darkgrey;
+        }
+        a{
+            color: black;
+            padding: 3px;
+
+        }
+    </style>
+</head>
+
+<body>
+<div class="wrapper">
+    <input type="text">
+    <ul></ul>
+</div>
+<script>
+    var oInput =document.getElementsByTagName('input')[0];
+    var oUl = document.getElementsByTagName('ul')[0];
+    oInput.oninput = function(){
+    var value = this.value;
+    var oScript = document.createElement('script');
+    oScript.src='https://www.baidu.com/sugrec?pre=1&p=3&ie=utf-8&json=1&prod=pc&from=pc_web&sugsid=1446,21125,29911,29568,29220&wd='+value+'&req=2&bs=A%20cookie%20associated%20with%20a%20cross-site%20resource%20at%20http%3A%2F%2Fwww.baidu.com%2F%20was&csor=2&pwd=n&cb=doJson&_=1572158663078';
+    document.body.appendChild(oScript);
+    oScript.remove();
+    }
+    function doJson(data){
+        var dataArr= data.g;
+        var str = ''
+        if(dataArr){
+            for(var i = 0 ;i < dataArr.length&&i< 4; i ++){
+                var q = dataArr[i].q;
+                str += '<li><a href="https://www.baidu.com/s?wd= '+ q +'">' + q + '</a></li>';
+            }
+            oUl.innerHTML = str;
+            oUl.style.display='block';
+        }else {
+              oUl.style.display='none';
+        }
+    }
+</script>
+</body>
+</html>
